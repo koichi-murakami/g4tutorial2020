@@ -1,0 +1,16 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# mainControl.mac: Top level macro for running a Geant4 application
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+## Set up primary generaotr
+/control/execute primaryGeneratorSetup.mac
+
+## Set up visulalization ennrionment
+/control/execute visSetup_Simplex.mac
+
+## Set up verbosity
+/control/execute verboseSetup.mac
+
+## Invoke the application
+/run/beamOn 0           # Only invokes initialization - no event generation

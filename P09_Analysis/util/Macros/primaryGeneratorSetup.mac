@@ -1,0 +1,14 @@
+#------------------------------------------------------------------------------------
+# primaryGeneratorSetup.mac: Set up the primary generator environment
+#  [Note] Geant4 Tutorial for Hep/Space Users: 2015.08.24 @Hiroshima 
+#------------------------------------------------------------------------------------
+
+## Particle type
+/gun/particle geantino
+
+## Kinematical information
+/gun/energy    1.0 MeV
+/gun/position  0.0  0.0  0.0 cm
+/gun/direction 0.0  0.0  +1.0
+
+

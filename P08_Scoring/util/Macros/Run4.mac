@@ -1,0 +1,8 @@
+# electron  incident 
+/tracking/verbose 0
+/cuts/verbose 0
+/gun/particle e-
+/gun/energy 30 MeV
+/gun/position 0. 0. -3.25 cm
+/gun/direction 0. 0. 1.
+/run/beamOn 10

@@ -1,0 +1,21 @@
+#------------------------------------------------------------------------------------
+# visSetup_Simplex.mac: Set up the visualization environment - simple version
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#------------------------------------------------------------------------------------
+
+## Specify the viewer
+/vis/open OGL                                 # Use OpenGL
+
+## Specify objects to draw
+/vis/drawVolume world                         # Volumes
+/vis/scene/add/trajectories smooth            # Particle trajectories
+/vis/scene/endOfEventAction accumulate        # Superimpose all of the events
+
+## Add decorations
+/vis/scene/add/axes                           # Axes (x=red, y=green, z=blue)
+
+## To get nice view
+/vis/viewer/set/style wireframe               # Volume style (surface/wireframe)
+/vis/viewer/set/auxiliaryEdge true            # Show edges of curved surfaces
+/vis/viewer/set/lineSegmentsPerCircle 100     # Make circles smoothed
+/vis/viewer/set/viewpointThetaPhi 120 150     # Nice camera angle

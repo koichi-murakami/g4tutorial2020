@@ -1,0 +1,12 @@
+#---------------------------------------------------------------------
+# primaryGeneratorSetup.mac: Set up the primary generator environment
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#---------------------------------------------------------------------
+
+## Particle type
+/gun/particle ion
+/gun/ion 55 137
+
+## Kinematical information
+/gun/energy    0.0 MeV               # For stationary decay
+/gun/position  0.0  0.0  -5.0 cm

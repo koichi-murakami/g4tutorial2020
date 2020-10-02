@@ -1,0 +1,17 @@
+#------------------------------------------------------------------------------------
+# verboseSetup.mac: Set up the verbosity environment
+#  [Note] Geant4 Tutorial for Hep/Space Users: 2015.08.24 @Hiroshima 
+#------------------------------------------------------------------------------------
+
+## Commonly used verbosity
+/run/verbose 1
+/tracking/verbose 1
+
+## Miscellaneous verbosity
+/control/verbose 0
+/event/verbose 0
+/material/verbose 0
+/process/verbose 0
+/vis/verbose 0
+
+

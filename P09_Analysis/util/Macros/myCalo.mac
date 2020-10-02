@@ -1,0 +1,18 @@
+# setup for 1 GeV proton, muon and electron
+/run/initialize
+/tracking/verbose 0
+/gun/energy 1 GeV
+/gun/position 0. 0. 0. cm
+/gun/direction 0. 0. 1.
+# run1 proton
+/gun/particle proton
+/analysis/setFileName proton1GeV
+/run/beamOn 1000
+#run2 mu-
+/gun/particle mu-
+/analysis/setFileName muon1GeV
+/run/beamOn 1000
+#run3 electron
+/gun/particle e-
+/analysis/setFileName electron1GeV
+/run/beamOn 1000

@@ -1,0 +1,69 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// PrimaryGenerator.cc
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#include "PrimaryGenerator.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleGun.hh"
+#include "G4SystemOfUnits.hh"
+#include "Randomize.hh"
+
+//------------------------------------------------------------------------------
+  PrimaryGenerator::PrimaryGenerator()
+  : fpParticleGun_1{0}, fpParticleGun_2{0}
+//------------------------------------------------------------------------------
+{
+// Particle table
+   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+
+// 1st gun - setup for fixed parameters
+   fpParticleGun_1  = new G4ParticleGun{};
+   {
+     G4String particleName = "e-";
+     G4double momentum = 50.0*MeV;
+     auto momentumDirection = G4ThreeVector{ 0.0, 0.0, 1.0 };
+     G4ParticleDefinition* particle = particleTable->FindParticle( particleName );
+
+     fpParticleGun_1->SetParticleDefinition( particle );
+     fpParticleGun_1->SetParticleMomentum( momentum );
+     fpParticleGun_1->SetParticleMomentumDirection( momentumDirection );
+   }
+
+// 2nd gun - setup for fixed parameters
+   fpParticleGun_2  = new G4ParticleGun{};
+   {
+     G4String particleName = "e+";
+     G4double momentum = 50.0*MeV;
+     auto momentumDirection = G4ThreeVector{ 0.0, 0.0, 1.0 };
+     G4ParticleDefinition* particle = particleTable->FindParticle( particleName );
+
+     fpParticleGun_2->SetParticleDefinition( particle );
+     fpParticleGun_2->SetParticleMomentum( momentum );
+     fpParticleGun_2->SetParticleMomentumDirection( momentumDirection );
+   }
+}
+
+//------------------------------------------------------------------------------
+  PrimaryGenerator::~PrimaryGenerator()
+//------------------------------------------------------------------------------
+{
+  delete fpParticleGun_1;
+  delete fpParticleGun_2;
+}
+
+//------------------------------------------------------------------------------
+  void PrimaryGenerator::GeneratePrimaries( G4Event* anEvent )
+//------------------------------------------------------------------------------
+{
+// Gun position - randomization
+   G4double pos_X = 2.0*mm*(G4UniformRand()-0.5);
+   G4double pos_Y = 2.0*mm*(G4UniformRand()-0.5);
+   G4double pos_Z = -2.0*cm;
+   auto position = G4ThreeVector{ pos_X, pos_Y, pos_Z };
+
+   fpParticleGun_1->SetParticlePosition( position );
+   fpParticleGun_2->SetParticlePosition( position );
+
+// Generate primaries
+   fpParticleGun_1->GeneratePrimaryVertex( anEvent );
+   fpParticleGun_2->GeneratePrimaryVertex( anEvent );
+}

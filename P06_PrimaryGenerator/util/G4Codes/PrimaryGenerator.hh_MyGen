@@ -1,0 +1,23 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// PrimaryGenerator.hh
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifndef PrimaryGenerator_h
+#define PrimaryGenerator_h 1
+
+#include "G4VUserPrimaryGeneratorAction.hh"
+#include "G4ThreeVector.hh"
+class G4ParticleDefinition;
+class G4Event;
+
+//------------------------------------------------------------------------------
+  class PrimaryGenerator : public G4VUserPrimaryGeneratorAction
+//------------------------------------------------------------------------------
+{
+  public:
+    PrimaryGenerator();
+   ~PrimaryGenerator();
+
+  public:
+    void GeneratePrimaries( G4Event* );
+};
+#endif

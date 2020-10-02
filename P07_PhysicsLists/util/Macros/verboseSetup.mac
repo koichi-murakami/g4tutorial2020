@@ -1,0 +1,15 @@
+#------------------------------------------------------------------------------------
+# verboseSetup.mac: Set up the verbosity environment
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#------------------------------------------------------------------------------------
+
+## Commonly used verbosity
+/control/verbose 2
+/run/verbose 2
+/tracking/verbose 0
+
+## Miscellaneous verbosity
+#/event/verbose 0
+#/material/verbose 0
+#/process/verbose 0
+#/gps/verbose 0

@@ -1,0 +1,27 @@
+#------------------------------------------------------------------------------------
+# primaryGeneratorSetup.mac: Set up the primary generator environment
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#------------------------------------------------------------------------------------
+
+## GPS example macro found in G4 User's Guide: For Appliation Developers (ADM)
+##  - Section 2.7.4
+
+## The macro defines a planar source, square in shape, 2 mm by 2 mm and
+## centred at (0,0,-1) cm. By default the normal of this plane is the z-axis.
+## The angular distribution is to follow the cosine-law with the cut in the
+## theta angle of 10 deg. The energy spectrum is linear, with gradient and
+## intercept equal to 1, and extends from 2 to 10 MeV.
+
+/gps/particle gamma
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/centre 0 0 -1 cm             # Value changed from the ADM example
+/gps/pos/halfx 1 mm                   # Value changed from the ADM example
+/gps/pos/halfy 1 mm                   # Value changed from the ADM example
+/gps/ang/type cos
+/gps/ang/maxtheta 10 deg              # Added to the example
+/gps/ene/type Lin
+/gps/ene/min 2 MeV
+/gps/ene/max 10 MeV
+/gps/ene/gradient 1
+/gps/ene/intercept 1

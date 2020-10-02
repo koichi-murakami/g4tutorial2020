@@ -1,0 +1,97 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Geometry.cc
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#include "Geometry.hh"
+#include "G4Box.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4ThreeVector.hh"
+#include "G4RotationMatrix.hh"
+#include "G4Transform3D.hh"
+#include "G4NistManager.hh"
+#include "G4VisAttributes.hh"
+#include "G4SystemOfUnits.hh"
+
+//------------------------------------------------------------------------------
+  Geometry::Geometry() {}
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+  Geometry::~Geometry() {}
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+  G4VPhysicalVolume* Geometry::Construct()
+//------------------------------------------------------------------------------
+{
+// Get pointer to 'Material Manager'
+   G4NistManager* materi_Man = G4NistManager::Instance();
+
+// Define 'World Volume'
+   // Define the shape of solid
+   G4double leng_X_World = 2.0*m;           // X-full-length of world
+   G4double leng_Y_World = 2.0*m;           // Y-full-length of world
+   G4double leng_Z_World = 2.0*m;           // Z-full-length of world
+   auto solid_World =
+     new G4Box{ "Solid_World", leng_X_World/2.0, leng_Y_World/2.0, leng_Z_World/2.0 };
+
+   // Define logical volume
+   G4Material* materi_World = materi_Man->FindOrBuildMaterial( "G4_AIR" );
+   auto logVol_World = new G4LogicalVolume{ solid_World, materi_World, "LogVol_World" };
+   logVol_World->SetVisAttributes ( G4VisAttributes::Invisible );
+
+// Placement of 'World Volume'
+   G4int copyNum_World = 0;                 // Set ID number of world
+   auto physVol_World  = new G4PVPlacement{ G4Transform3D(), "PhysVol_World",
+                                           logVol_World, 0, false, copyNum_World };
+
+// Define 'Water Box'
+   // Define the shape of solid
+   G4double leng_X_WaterBox = 10.0*cm;      // X-full-length of water box
+   G4double leng_Y_WaterBox = 10.0*cm;      // Y-full-length of water box
+   G4double leng_Z_WaterBox =  4.0*cm;      // Z-full-length of water box
+   auto solid_WaterBox = new G4Box{ "Solid_WaterBox", leng_X_WaterBox/2.0,
+                                    leng_Y_WaterBox/2.0, leng_Z_WaterBox/2.0 };
+
+   // Define logical volume
+   G4Material* materi_WaterBox = materi_Man->FindOrBuildMaterial( "G4_WATER" );
+   auto logVol_WaterBox = new G4LogicalVolume{ solid_WaterBox, materi_WaterBox,
+                                               "LogVol_WaterBox", 0, 0, 0 };
+
+// Define 'Water Container'
+   // Define the shape of solid
+   G4double leng_X_WaterCont = 12.0*cm;     // X-full-length of water container
+   G4double leng_Y_WaterCont = 12.0*cm;     // Y-full-length of water container
+   G4double leng_Z_WaterCont =  6.0*cm;     // Z-full-length of water container
+   auto solid_WaterCont = new G4Box{ "Solid_WaterCont", leng_X_WaterCont/2.0,
+                                     leng_Y_WaterCont/2.0, leng_Z_WaterCont/2.0 };
+
+   // Define logical volume (Container is Aluminun)
+   G4Material* materi_WaterCont = materi_Man->FindOrBuildMaterial( "G4_Al" );
+   auto logVol_WaterCont = new G4LogicalVolume{ solid_WaterCont, materi_WaterCont,
+                                                "LogVol_WaterCont", 0, 0, 0 };
+
+// Placement of 'Water Box' into 'Water Container'
+   // Create G4Transform3D to define rotation/translation
+   G4double pos_X_LogV = 0.0*cm;            // X-location LogV
+   G4double pos_Y_LogV = 0.0*cm;            // Y-location LogV
+   G4double pos_Z_LogV = 0.0*cm;            // Z-location LogV
+   auto threeVect_LogV = G4ThreeVector{ pos_X_LogV, pos_Y_LogV, pos_Z_LogV };
+   auto rotMtrx_LogV   = G4RotationMatrix{};
+   auto trans3D_LogV   = G4Transform3D{ rotMtrx_LogV, threeVect_LogV };
+
+   // Install 'Water Box'
+   G4int copyNum_LogV = 1000;               // Set ID number of LogV
+   new G4PVPlacement{ trans3D_LogV, logVol_WaterBox, "PhysVol_WaterBox",
+                      logVol_WaterCont, false, copyNum_LogV, true };
+
+// Placement of 'Water Container' into 'World Volume'
+   // Install 'Water Container' - reuse G4Transform3D for 'Water Box'
+   copyNum_LogV = 2000;                     // Set ID number of LogV
+   new G4PVPlacement{ trans3D_LogV, "PhysVol_WaterCont", logVol_WaterCont,
+                      physVol_World, false, copyNum_LogV, true };
+
+// Return the physical volume of 'World'
+   return physVol_World;
+}

@@ -1,0 +1,81 @@
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// SensitiveVolume.cc
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#include "SensitiveVolume.hh"
+#include "G4TouchableHistory.hh"
+#include "G4Track.hh"
+#include "G4Step.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4HCofThisEvent.hh"
+#include "Analysis.hh"
+#include "G4UnitsTable.hh"
+#include "G4SystemOfUnits.hh"
+
+//------------------------------------------------------------------------------
+  SensitiveVolume::SensitiveVolume(G4String name)
+  : G4VSensitiveDetector(name)
+{}
+//------------------------------------------------------------------------------
+  SensitiveVolume::~SensitiveVolume()
+{}
+//------------------------------------------------------------------------------
+  void SensitiveVolume::Initialize(G4HCofThisEvent*)
+{
+
+     sum_eDep_1 = 0.;
+     sum_stepLength_1 =0.; 
+     sum_eDep_2 = 0.;
+     sum_stepLength_2 =0.;
+
+//   G4cout << "==  Initialize sum_eDeps and sum_stepLengths   " <<G4endl;
+}
+//------------------------------------------------------------------------------
+  void SensitiveVolume::EndOfEvent(G4HCofThisEvent*)
+{
+   G4AnalysisManager* analysisManager = G4AnalysisManager::Instance();
+   analysisManager->FillNtupleDColumn(0, sum_eDep_1);
+   analysisManager->FillNtupleDColumn(1, sum_stepLength_1);
+   analysisManager->FillNtupleDColumn(2, sum_eDep_2);
+   analysisManager->FillNtupleDColumn(3, sum_stepLength_2);
+   analysisManager->AddNtupleRow();
+
+   G4cout <<  " eDep_1 = "<< G4BestUnit(sum_eDep_1, "Energy")
+          << " stepLength_1 = " << G4BestUnit(sum_stepLength_1, "Length") 
+          << " eDep_2 = "<< G4BestUnit(sum_eDep_2, "Energy")
+          << " stepLength_2 = " << G4BestUnit(sum_stepLength_2, "Length") <<G4endl;
+}
+
+//------------------------------------------------------------------------------
+  G4bool SensitiveVolume::ProcessHits(G4Step* aStep, G4TouchableHistory*)
+{
+    G4double edep = aStep->GetTotalEnergyDeposit();
+    G4double stepLength = aStep->GetStepLength();
+
+	sum_eDep_2 = sum_eDep_2 + edep; sum_stepLength_2 = sum_stepLength_2 + stepLength;
+
+    if ( aStep->GetTrack()->GetTrackID() != 1 ) {return false;} //primary particle
+	sum_eDep_1 = sum_eDep_1 + edep; sum_stepLength_1 = sum_stepLength_1 + stepLength; 
+
+  G4StepPoint* pre = aStep->GetPreStepPoint() ;
+   G4int copyNo = pre->GetPhysicalVolume()->GetCopyNo() ;
+  
+// get total energy deposit in this step "edep"
+
+
+// get step length and accumulate it
+
+
+    if(copyNo == 1000) {
+;
+	}
+    if(copyNo == 2000) {
+
+;	}
+  return true;
+}
+
+
+
+
+
+

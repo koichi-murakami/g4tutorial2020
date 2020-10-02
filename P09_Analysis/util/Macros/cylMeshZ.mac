@@ -1,0 +1,31 @@
+# Example of cylinder mesh in Z direction
+# define scoring mesh
+/score/create/cylinderMesh cylMesh_1
+/score/mesh/cylinderSize 25. 12.5 mm
+/score/mesh/translate/xyz 0 0 -20. mm
+# Dividing segments in R Z Phi directions
+#below, 100 segmentations  in Z
+/score/mesh/nBin 1 100 1
+#
+#/score/quantity/doseDeposit doseDep
+/score/quantity/energyDeposit eDep
+#
+/score/close
+/score/list
+#
+#/control/verbose 2
+/tracking/verbose 0
+# define gun and start a run
+/gun/particle proton
+/gun/energy 0.1 GeV
+/gun/position 0 0 -15 cm
+/gun/direction 0 0 1
+/vis/disable
+/run/beamOn 1000
+/vis/enable
+#
+
+# Dump scores to a file
+
+/score/dumpQuantityToFile cylMesh_1 eDep eDep-proton.csv
+#

@@ -1,0 +1,17 @@
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# GlobalSetup.mac: Top level macro to set up the initial environment to run "appli"
+#  [Note] Geant4 Tutorial for Hep/Space Users: 2015.08.24 @Hiroshima 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+## Set up primary generaotr
+/control/execute primaryGeneratorSetup.mac
+
+## Set up visulalization ennrionment
+/control/execute visSetup_Simplex.mac
+
+## Set up verbosity
+/control/execute verboseSetup.mac
+
+## Invoke the application
+/run/beamOn 0        # arg = 0; Only invokes initialization - no event generation
+                     # arg > 0; Specified number of events will be executed  

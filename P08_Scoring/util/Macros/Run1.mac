@@ -1,0 +1,6 @@
+#geantino
+/gun/particle geantino
+/gun/position 0. 0. -15. cm
+/gun/direction 0. 0. 1.
+/gun/energy 1 eV
+/run/beamOn 1

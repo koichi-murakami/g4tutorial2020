@@ -1,0 +1,9 @@
+## My first Geant4 macro file
+
+/gun/position  0.0  0.0  -5.0 cm
+/gun/direction 0.0  0.0  +1.0
+/vis/open OGL
+/vis/drawVolume world
+/vis/scene/add/trajectories
+/tracking/verbose 1
+/run/beamOn 1

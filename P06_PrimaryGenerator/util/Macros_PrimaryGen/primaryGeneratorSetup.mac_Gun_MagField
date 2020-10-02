@@ -1,0 +1,7 @@
+#------------------------------------------------------------------------------------
+# primaryGeneratorSetup.mac: Set up the primary generator environment
+#  [Note] Geant4 Tutorial for Hep/Medicine Users
+#------------------------------------------------------------------------------------
+
+## You should not use 'gun' UI commands when you set multiple guns
+## in your primary generator codes.
