@@ -1,12 +1,12 @@
 # Geant4 Examples for Tutorials
 
-[![geant4](https://img.shields.io/badge/geant4-10.5-blue.svg)](http://www.geant4.org/)
-[![g4tut](https://img.shields.io/badge/g4tut-2019.11-orange.svg)](https://wiki.kek.jp/display/geant4)
+[![geant4](https://img.shields.io/badge/geant4-10.6-blue.svg)](http://www.geant4.org/)
+[![g4tut](https://img.shields.io/badge/g4tut-2020.10-orange.svg)](https://wiki.kek.jp/display/geant4)
 
 
 Geant4 example code for tutorials
 
-* 2019.11 (v10.5.p01)
+* 2020.10 (v10.6.p02)
 
 ## License
 BSD 2-Clause License
